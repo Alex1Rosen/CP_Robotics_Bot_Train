@@ -1,0 +1,44 @@
+import time
+import threading
+
+import cv2 as cv
+import numpy as np
+
+# Camera Function
+def cam_thread_func(thread_name):
+    print("HI " + thread_name)
+    cap = cv.VideoCapture(0)
+    if not cap.isOpened():
+        print("Cannot open camera")
+        exit()
+    while True:
+        # Capture frame-by-frame
+        ret, frame = cap.read()
+        # if frame is read correctly ret is True
+        if not ret:
+            print("Can't receive frame (stream end?). Exiting ...")
+            break
+        # Our operations on the frame come here
+        gray = cv.cvtColor(frame, cv.COLOR_BGR2GRAY)
+        # Display the resulting frame
+        cv.imshow('frame', gray)
+        if cv.waitKey(1) == ord('q'):
+            break
+    # When everything done, release the capture
+    cap.release()
+    cv.destroyAllWindows()
+
+
+if __name__ == "__main__":
+    t1 = threading.Thread(target=cam_thread_func, args = ("thread_1",))
+    t2 = threading.Thread(target=cam_thread_func, args = ("thread_2",))
+   # starting thread 1
+    t1.start()
+   # starting thread 2
+    t2.start()
+
+    # wait until thread 1 is completely executed
+
+    t1.join()
+    # wait until thread 2 is completely executed
+    t2.join()

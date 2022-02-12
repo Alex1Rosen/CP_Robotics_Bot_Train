@@ -8,30 +8,25 @@ params = cv2.SimpleBlobDetector_Params()
 # Change thresholds
 params.minThreshold = 0
 params.maxThreshold = 1000
-
+#Filter by Color
 params.filterByColor = True
 params.blobColor = 0
-
 # Filter by Area.
 params.filterByArea = False
 params.minArea = 50
-
 # Filter by Circularity
 params.filterByCircularity = True
 params.minCircularity = 0.75
-
 # Filter by Convexity
 params.filterByConvexity = False
 params.minConvexity = 0.25
-
 # Filter by Inertia
 params.filterByInertia = False
 params.minInertiaRatio = 0.7
 
 detector = cv2.SimpleBlobDetector_create(params)
 # Params
-width = -1
-height = -1
+
 if not cap.isOpened():
     print("Cannot open camera")
     exit()
